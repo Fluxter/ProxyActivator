@@ -38,11 +38,10 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.menuStrip2 = new System.Windows.Forms.MenuStrip();
             this.dateiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.programmMitWindowsStartenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.programmNichtMitWindowsStartenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip2 = new System.Windows.Forms.MenuStrip();
             this.groupBox1.SuspendLayout();
             this.menuStrip2.SuspendLayout();
             this.SuspendLayout();
@@ -101,7 +100,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(22, 118);
+            this.label2.Location = new System.Drawing.Point(12, 89);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(230, 13);
             this.label2.TabIndex = 4;
@@ -113,30 +112,12 @@
             this.groupBox1.Controls.Add(this.L_Connected);
             this.groupBox1.Controls.Add(this.L_ProxyState);
             this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Location = new System.Drawing.Point(22, 56);
+            this.groupBox1.Location = new System.Drawing.Point(12, 27);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(330, 59);
+            this.groupBox1.Size = new System.Drawing.Size(394, 59);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Informationen";
-            // 
-            // menuStrip1
-            // 
-            this.menuStrip1.Location = new System.Drawing.Point(0, 24);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(468, 24);
-            this.menuStrip1.TabIndex = 6;
-            this.menuStrip1.Text = "menuStrip1";
-            // 
-            // menuStrip2
-            // 
-            this.menuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.dateiToolStripMenuItem});
-            this.menuStrip2.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip2.Name = "menuStrip2";
-            this.menuStrip2.Size = new System.Drawing.Size(468, 24);
-            this.menuStrip2.TabIndex = 7;
-            this.menuStrip2.Text = "menuStrip2";
             // 
             // dateiToolStripMenuItem
             // 
@@ -150,28 +131,36 @@
             // programmMitWindowsStartenToolStripMenuItem
             // 
             this.programmMitWindowsStartenToolStripMenuItem.Name = "programmMitWindowsStartenToolStripMenuItem";
-            this.programmMitWindowsStartenToolStripMenuItem.Size = new System.Drawing.Size(273, 22);
+            this.programmMitWindowsStartenToolStripMenuItem.Size = new System.Drawing.Size(282, 22);
             this.programmMitWindowsStartenToolStripMenuItem.Text = "Programm mit Windows starten";
             this.programmMitWindowsStartenToolStripMenuItem.Click += new System.EventHandler(this.programmMitWindowsStartenToolStripMenuItem_Click);
             // 
             // programmNichtMitWindowsStartenToolStripMenuItem
             // 
             this.programmNichtMitWindowsStartenToolStripMenuItem.Name = "programmNichtMitWindowsStartenToolStripMenuItem";
-            this.programmNichtMitWindowsStartenToolStripMenuItem.Size = new System.Drawing.Size(273, 22);
-            this.programmNichtMitWindowsStartenToolStripMenuItem.Text = "Programm nicht mit Windows starten";
+            this.programmNichtMitWindowsStartenToolStripMenuItem.Size = new System.Drawing.Size(282, 22);
+            this.programmNichtMitWindowsStartenToolStripMenuItem.Text = "Automatischen Programmstart löschen";
             this.programmNichtMitWindowsStartenToolStripMenuItem.Click += new System.EventHandler(this.programmNichtMitWindowsStartenToolStripMenuItem_Click);
+            // 
+            // menuStrip2
+            // 
+            this.menuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.dateiToolStripMenuItem});
+            this.menuStrip2.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip2.Name = "menuStrip2";
+            this.menuStrip2.Size = new System.Drawing.Size(423, 24);
+            this.menuStrip2.TabIndex = 7;
+            this.menuStrip2.Text = "menuStrip2";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(468, 201);
+            this.ClientSize = new System.Drawing.Size(423, 114);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.menuStrip2);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "Proxy Activator";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
@@ -196,11 +185,10 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.MenuStrip menuStrip2;
         private System.Windows.Forms.ToolStripMenuItem dateiToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem programmMitWindowsStartenToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem programmNichtMitWindowsStartenToolStripMenuItem;
+        private System.Windows.Forms.MenuStrip menuStrip2;
     }
 }
 

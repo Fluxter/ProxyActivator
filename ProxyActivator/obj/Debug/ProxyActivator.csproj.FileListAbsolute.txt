@@ -10,3 +10,9 @@ c:\users\marcel\Documents\Visual Studio 2013\Projects\ProxyActivator\ProxyActiva
 C:\Users\Marcel\ownCloud\Dokumente\Visual Studio 2013\Projects\ProxyActivator\ProxyActivator\bin\Debug\ProxyActivator.exe.config
 C:\Users\Marcel\ownCloud\Dokumente\Visual Studio 2013\Projects\ProxyActivator\ProxyActivator\obj\Debug\ProxyActivator.exe
 C:\Users\Marcel\ownCloud\Dokumente\Visual Studio 2013\Projects\ProxyActivator\ProxyActivator\obj\Debug\ProxyActivator.pdb
+C:\Users\Marcel\ownCloud\Dokumente\Visual Studio 2013\Projects\ProxyActivator\ProxyActivator\bin\Debug\ProxyActivator.exe
+C:\Users\Marcel\ownCloud\Dokumente\Visual Studio 2013\Projects\ProxyActivator\ProxyActivator\bin\Debug\ProxyActivator.pdb
+C:\Users\Marcel\ownCloud\Dokumente\Visual Studio 2013\Projects\ProxyActivator\ProxyActivator\obj\Debug\ProxyActivator.csprojResolveAssemblyReference.cache
+C:\Users\Marcel\ownCloud\Dokumente\Visual Studio 2013\Projects\ProxyActivator\ProxyActivator\obj\Debug\ProxyActivator.Form1.resources
+C:\Users\Marcel\ownCloud\Dokumente\Visual Studio 2013\Projects\ProxyActivator\ProxyActivator\obj\Debug\ProxyActivator.Properties.Resources.resources
+C:\Users\Marcel\ownCloud\Dokumente\Visual Studio 2013\Projects\ProxyActivator\ProxyActivator\obj\Debug\ProxyActivator.csproj.GenerateResource.Cache

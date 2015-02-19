@@ -21,19 +21,21 @@ namespace ProxyActivator
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            this.WindowState = FormWindowState.Minimized;
             notifyIcon.Visible = true;
-            this.Hide();
+
+            this.WindowState = FormWindowState.Minimized;
+            this.ShowInTaskbar = false;
+
             ShowBalloonTipText(
                 "Proxy Activator gestartet",
-                "Der Proxy Activator von Marcel Kallen läuft nun im Hintergrund.\nKontakt: admin@kallensrv.de",
+                "Der BK-TM Proxy Activator läuft nun im Hintergrund.\nKontakt: admin@kallensrv.de",
                 ToolTipIcon.Info, 1200
             );
 
-            ContextMenu menue = new ContextMenu();
+           /* ContextMenu menue = new ContextMenu();
             menue.MenuItems.Add("E&xit");
 
-            notifyIcon.ContextMenu = menue;
+            notifyIcon.ContextMenu = menue;*/
         }
 
         private void ShowBalloonTipText(string title, string text, ToolTipIcon icon, int time)
@@ -131,30 +133,48 @@ namespace ProxyActivator
             if (this.WindowState == FormWindowState.Normal)
             {
                 this.Hide();
+                this.ShowInTaskbar = false;
+                this.Visible = false;
                 this.WindowState = FormWindowState.Minimized;
             }
             else
             {
                 this.Show();
                 this.WindowState = FormWindowState.Normal;
+                this.ShowInTaskbar = true;
+                this.Visible = true;
                 this.Focus();
             }
         }
 
         private void programmMitWindowsStartenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            RegistryKey AutostartKey = Microsoft.Win32.Registry.LocalMachine.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-            AutostartKey.SetValue("MK-BKTM-Autostart", Application.ExecutablePath.ToString());
-            AutostartKey.Close();
-            MessageBox.Show("Das Programm wird nun automatisch mit Windows gestartet.", "Erfolgreich", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            try
+            {
+                RegistryKey AutostartKey = Microsoft.Win32.Registry.LocalMachine.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+                AutostartKey.SetValue("MK-BKTM-Autostart", Application.ExecutablePath.ToString());
+                AutostartKey.Close();
+                MessageBox.Show("Das Programm wird nun automatisch mit Windows gestartet.", "Erfolgreich", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            catch
+            {
+                MessageBox.Show("Konnte die Registry nicht beschreiben.\nWurde das Programm als Administrator gestartet?", "Fehler beim Eintrag", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void programmNichtMitWindowsStartenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            RegistryKey AutostartKey = Microsoft.Win32.Registry.LocalMachine.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-            AutostartKey.SetValue("MK-BKTM-Autostart", "");
-            AutostartKey.Close();
-            MessageBox.Show("Das Programm wird nun nicht mehr mit Windows gestartet.", "Erfolgreich", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            try
+            {
+                RegistryKey AutostartKey = Microsoft.Win32.Registry.LocalMachine.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+                AutostartKey.SetValue("MK-BKTM-Autostart", "");
+                AutostartKey.Close();
+                MessageBox.Show("Das Programm wird nun nicht mehr mit Windows gestartet.", "Erfolgreich", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            catch
+            {
+                MessageBox.Show("Konnte die Registry nicht beschreiben.\nWurde das Programm als Administrator gestartet?", "Fehler beim Eintrag", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

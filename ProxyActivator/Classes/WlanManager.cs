@@ -45,7 +45,6 @@ namespace ProxyActivator
         public static extern bool InternetSetOption(IntPtr hInternet, int dwOption, IntPtr lpBuffer, int dwBufferLength);
         public const int INTERNET_OPTION_SETTINGS_CHANGED = 39;
         public const int INTERNET_OPTION_REFRESH = 37;
-        bool settingsReturn, refreshReturn;
         #endregion
 
         #region Public Methods
@@ -75,7 +74,11 @@ namespace ProxyActivator
             const string subkey = "Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings";
             const string keyName = userRoot + "\\" + subkey;
 
-            Registry.SetValue(keyName, "ProxyServer", ip + ":" + port);
+            if (enabled)
+                Registry.SetValue(keyName, "ProxyServer", ip + ":" + port);
+            else
+                Registry.SetValue(keyName, "ProxyServer", "");
+
             Registry.SetValue(keyName, "ProxyEnable", enabled ? "1" : "0");
 
             // These lines implement the Interface in the beginning of program 
@@ -86,7 +89,6 @@ namespace ProxyActivator
         public void DeactivateProxy()
         {
             this.ActivateProxy("", 0, false);
-
         }
         #endregion
     }

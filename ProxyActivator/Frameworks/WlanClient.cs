@@ -682,6 +682,7 @@ public class WlanClient
                         break;
                     case Wlan.WlanNotificationCodeAcm.ScanFail:
                         {
+                            /*
                             int expectedSize = Marshal.SizeOf(typeof(Wlan.WlanReasonCode));
                             if (notifyData.dataSize >= expectedSize)
                             {
@@ -689,6 +690,7 @@ public class WlanClient
                                 if (wlanIface != null)
                                     wlanIface.OnWlanReason(notifyData, reasonCode);
                             }
+                             * */
                         }
                         break;
                 }
