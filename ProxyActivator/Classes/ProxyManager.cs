@@ -54,7 +54,7 @@ namespace ProxyActivator
                 else
                 {
                     file.IniWriteValue("http", "proxy", "");
-                    ret = new State("Deaktiviert", Color.Green);
+                    ret = new State("Deaktiviert", Color.Red);
                 }
                 Utils.RestartApplicationIfRunning("GitHub");
                 return ret;
@@ -73,11 +73,32 @@ namespace ProxyActivator
 
         public State ProxyToggleOwncloud(Boolean enable)
         {
-            if (!Utils.CheckForSoftwareInstallation("owncloud"))
+            if (!Utils.AppDataLocalFolderExists("owncloud"))
                 return new State("Nicht installiert", Color.Red);
             else
             {
-                return new State("NICHT ENTHALTEN", Color.Orange);
+                string ProcessExe = Utils.KillProcessAndGetExePathWait("owncloud");
+                State ret = null;
+                String path = Environment.ExpandEnvironmentVariables(Environment.SpecialFolder.LocalApplicationData + @"\owncloud\config.cfg");
+                IniFile file = new IniFile(path);
+
+                if (enable)
+                {
+                    file.IniWriteValue("Proxy", "type", "3");
+                    file.IniWriteValue("Proxy", "host", "172.17.1.1");
+                    file.IniWriteValue("Proxy", "port", "3128");
+                    file.IniWriteValue("Proxy", "needsAuth", "false");
+                    file.IniWriteValue("Proxy", "user", "");
+                    file.IniWriteValue("Proxy", "pass", "@ByteArray()");
+                    ret = new State("Aktiviert", Color.Green);
+                }
+                else
+                {
+                    file.IniWriteValue("Proxy", "type", "0");
+                    ret = new State("Deaktiviert", Color.Red);
+                }
+                Utils.StartExecutable(ProcessExe);
+                return ret;
             }
         }
     }
