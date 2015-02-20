@@ -32,10 +32,9 @@ namespace ProxyActivator
                 ToolTipIcon.Info, 1200
             );
 
-           /* ContextMenu menue = new ContextMenu();
-            menue.MenuItems.Add("E&xit");
-
-            notifyIcon.ContextMenu = menue;*/
+            ContextMenu menue = new ContextMenu();
+            menue.MenuItems.Add(new MenuItem("Exit", beendenToolStripMenuItem_Click));
+            notifyIcon.ContextMenu = menue;
         }
 
         private void ShowBalloonTipText(string title, string text, ToolTipIcon icon, int time)
@@ -120,7 +119,8 @@ namespace ProxyActivator
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            WlanManager.Instance.DeactivateProxy();
+            
+            
         }
 
         private void notifyIcon_MouseClick(object sender, MouseEventArgs e)
@@ -167,13 +167,26 @@ namespace ProxyActivator
             try
             {
                 RegistryKey AutostartKey = Microsoft.Win32.Registry.LocalMachine.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-                AutostartKey.SetValue("MK-BKTM-Autostart", "");
+                AutostartKey.DeleteValue("MK-BKTM-Autostart");
                 AutostartKey.Close();
                 MessageBox.Show("Das Programm wird nun nicht mehr mit Windows gestartet.", "Erfolgreich", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             catch
             {
                 MessageBox.Show("Konnte die Registry nicht beschreiben.\nWurde das Programm als Administrator gestartet?", "Fehler beim Eintrag", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void beendenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Sind Sie sicher, dass Sie den Proxy Activator schließen möchten?", "Schließen", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk) == DialogResult.Yes)
+            {
+                WlanManager.Instance.DeactivateProxy();
+                Application.Exit();
+            }
+            else
+            {
+                return;
             }
         }
     }
