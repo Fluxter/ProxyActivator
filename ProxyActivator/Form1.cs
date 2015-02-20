@@ -29,10 +29,11 @@ namespace ProxyActivator
             ShowBalloonTipText(
                 "Proxy Activator gestartet",
                 "Der BK-TM Proxy Activator läuft nun im Hintergrund.\nKontakt: admin@kallensrv.de",
-                ToolTipIcon.Info, 1200
+                ToolTipIcon.Info, 600
             );
 
             ContextMenu menue = new ContextMenu();
+            menue.MenuItems.Add(new MenuItem("Über..", überToolStripMenuItem1_Click));
             menue.MenuItems.Add(new MenuItem("Exit", beendenToolStripMenuItem_Click));
             notifyIcon.ContextMenu = menue;
         }
@@ -188,6 +189,15 @@ namespace ProxyActivator
             {
                 return;
             }
+        }
+
+        private void überToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            string text = "Dieses Programm wurde für das Berufskolleg für Technik und Medien geschrieben.";
+            text += "\nEs dient dazu, dass der Systemproxy von Windows Betriebssystemen\nautomatisch den Schul-proxy einschaltet, sobald man";
+            text += "sich im Schul-Netzwerk befindet. Dies soll das ständige umstellen für Heim und Schul-Netz vereinfachen.";
+            text += "\n\nEntwickler: Marcel Kallen (admin@kallensrv.de)\nAuf Github: https://github.com/Levitas/ProxyActivator";
+            MessageBox.Show(text, "Über Proxy Activator", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

@@ -43,6 +43,8 @@
             this.programmNichtMitWindowsStartenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip2 = new System.Windows.Forms.MenuStrip();
             this.beendenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.überToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.überToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
             this.menuStrip2.SuspendLayout();
             this.SuspendLayout();
@@ -147,7 +149,8 @@
             // menuStrip2
             // 
             this.menuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.dateiToolStripMenuItem});
+            this.dateiToolStripMenuItem,
+            this.überToolStripMenuItem});
             this.menuStrip2.Location = new System.Drawing.Point(0, 0);
             this.menuStrip2.Name = "menuStrip2";
             this.menuStrip2.Size = new System.Drawing.Size(326, 24);
@@ -160,6 +163,21 @@
             this.beendenToolStripMenuItem.Size = new System.Drawing.Size(282, 22);
             this.beendenToolStripMenuItem.Text = "Beenden";
             this.beendenToolStripMenuItem.Click += new System.EventHandler(this.beendenToolStripMenuItem_Click);
+            // 
+            // überToolStripMenuItem
+            // 
+            this.überToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.überToolStripMenuItem1});
+            this.überToolStripMenuItem.Name = "überToolStripMenuItem";
+            this.überToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.überToolStripMenuItem.Text = "Hilfe";
+            // 
+            // überToolStripMenuItem1
+            // 
+            this.überToolStripMenuItem1.Name = "überToolStripMenuItem1";
+            this.überToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.überToolStripMenuItem1.Text = "Über";
+            this.überToolStripMenuItem1.Click += new System.EventHandler(this.überToolStripMenuItem1_Click);
             // 
             // Form1
             // 
@@ -201,6 +219,8 @@
         private System.Windows.Forms.ToolStripMenuItem programmNichtMitWindowsStartenToolStripMenuItem;
         private System.Windows.Forms.MenuStrip menuStrip2;
         private System.Windows.Forms.ToolStripMenuItem beendenToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem überToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem überToolStripMenuItem1;
     }
 }
 
