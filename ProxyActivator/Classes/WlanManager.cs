@@ -21,7 +21,6 @@ namespace ProxyActivator
         }
 
         #region Public Variables
-        public Boolean ProxyActivated = false;
         public static String WifiSSID = "AP-BKTM";
         #endregion 
 
@@ -69,7 +68,6 @@ namespace ProxyActivator
         }
         public void ActivateProxy(string ip, int port, bool enabled = true)
         {
-            this.ProxyActivated = enabled;
             const string userRoot = "HKEY_CURRENT_USER";
             const string subkey = "Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings";
             const string keyName = userRoot + "\\" + subkey;

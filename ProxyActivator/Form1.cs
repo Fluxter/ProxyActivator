@@ -59,31 +59,58 @@ namespace ProxyActivator
         {
         }
 
+        private void ActivateAllProxies()
+        {
+            if (ProxyManager.Instance.ProxyActivated)
+                return;
+
+            ProxyManager.Instance.ProxyActivated = true;
+            L_Connected.ForeColor = Color.Green;
+            L_Connected.Text = "Verbunden";
+
+            ShowBalloonTipText("Wlan \"" + WlanManager.WifiSSID + "\" Wlan verbunden!", "Alle Proxys wurden eingerichtet.", ToolTipIcon.Info, 2000);
+
+            this.ToggleProxies(true);
+        }
+        private void DeactivateAllProxies()
+        {
+            if (ProxyManager.Instance.ProxyActivated)
+                return;
+
+            ProxyManager.Instance.ProxyActivated = false;
+            L_Connected.ForeColor = Color.Orange;
+            L_Connected.Text = "Nicht verbunden";
+
+            this.ToggleProxies(false);
+
+            ShowBalloonTipText("Wlan \"" + WlanManager.WifiSSID + "\" Wlan getrennt!", "Alle Proxies wurden ausgeschaltet", ToolTipIcon.Warning, 2000);
+        }
+
+        private void SetText(ref Label label, State state)
+        {
+            label.ForeColor = state.Color;
+            label.Text = state.Text;
+        }
+
+        private void ToggleProxies(Boolean enable)
+        {
+            // Systemproxy
+            this.SetText(ref L_Proxy_System, ProxyManager.Instance.ProxyToggleSystem(enable));
+            // Github Proxy
+            this.SetText(ref L_Proxy_Github, ProxyManager.Instance.ProxyToggleGithub(enable));
+            // Spotify Proxy
+            this.SetText(ref L_Proxy_Spotify, ProxyManager.Instance.ProxyToggleSpotify(enable));
+        }
+
         private void WLanCheck_Tick(object sender, EventArgs e)
         {
-            if(WlanManager.Instance.ProxyActivated)
-            {
-                L_ProxyState.ForeColor = Color.Green;
-                L_ProxyState.Text = "Im System initialisiert";
-            }
-            else
-            {
-                L_ProxyState.ForeColor = Color.Red;
-                L_ProxyState.Text = "Nicht im System";
-            }
-
-
-            if (!WlanManager.Instance.ProxyActivated)
+            if (!ProxyManager.Instance.ProxyActivated)
             {
                 if (WlanManager.Instance.IsConnectedToAnySSID())
                 {
                     if (WlanManager.Instance.IsConnectedToSSID(WlanManager.WifiSSID))
                     {
-                        ShowBalloonTipText("Wlan \"" + WlanManager.WifiSSID + "\" Wlan verbunden!", "Der Systemproxy wurde automatisch eingestellt", ToolTipIcon.Info, 2000);
-                        WlanManager.Instance.ActivateProxy("172.17.1.1", 3128);
-
-                        L_Connected.ForeColor = Color.Green;
-                        L_Connected.Text = "Verbunden";
+                        ActivateAllProxies();
                     }
                     else
                     {
@@ -101,18 +128,13 @@ namespace ProxyActivator
             {
                 if (!WlanManager.Instance.IsConnectedToAnySSID())
                 {
-                    L_Connected.ForeColor = Color.Orange;
-                    L_Connected.Text = "Nicht verbunden";
-
-                    ShowBalloonTipText("Wlan \"" + WlanManager.WifiSSID + "\" Wlan getrennt!", "Der Systemproxy wurde automatisch ausgeschaltet", ToolTipIcon.Warning, 2000);
-                    WlanManager.Instance.DeactivateProxy();
+                    DeactivateAllProxies();
                 }
                 else 
                 {
                     if (!WlanManager.Instance.IsConnectedToSSID(WlanManager.WifiSSID))
                     {
-                        ShowBalloonTipText("Wlan \"" + WlanManager.WifiSSID + "\" Wlan getrennt!", "Der Systemproxy wurde automatisch ausgeschaltet", ToolTipIcon.Warning, 2000);
-                        WlanManager.Instance.DeactivateProxy();
+                        DeactivateAllProxies();
                     }
                 }
             }
