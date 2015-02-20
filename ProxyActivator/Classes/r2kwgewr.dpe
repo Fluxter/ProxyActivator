@@ -22,27 +22,25 @@ namespace ProxyActivator
         /// Restarts a Application if its running
         /// </summary>
         /// <param name="ExecutableName">The .exe Name of the Program</param>
-        public static void RestartApplicationIfRunning(string executableName, String arguments = "")
+        public static void RestartApplicationIfRunning(string ExecutableName)
         {
-            Process[] processlist = Process.GetProcesses();
-            foreach (Process theprocess in processlist)
-            {
-                if (theprocess.ProcessName.ToLower().Contains(executableName.ToLower()))
-                {
-                    string ExePath = theprocess.Modules[0].FileName;
-                    theprocess.Kill();
+            // Prepare the process to run
+            ProcessStartInfo start = new ProcessStartInfo();
+            // Enter in the command line arguments, everything you would enter after the executable name itself
+            start.Arguments = arguments;
+            // Enter the executable to run, including the complete path
+            start.FileName = ExecutableName;
+            // Do you want to show a console window?
+            start.WindowStyle = ProcessWindowStyle.Hidden;
+            start.CreateNoWindow = true;
 
-                    ProcessStartInfo start = new ProcessStartInfo();
-                    start.Arguments = arguments;
-                    start.FileName = ExePath;
-                    start.WindowStyle = ProcessWindowStyle.Hidden;
-                    start.CreateNoWindow = true;
-                    Process proc = Process.Start(start);
-                    /*using (Process proc = Process.Start(start))
-                    {
-                        proc.WaitForExit();
-                    }*/
-                }
+            // Run the external process & wait for it to finish
+            using (Process proc = Process.Start(start))
+            {
+                proc.WaitForExit();
+
+                // Retrieve the app's exit code
+                exitCode = proc.ExitCode;
             }
         }
 

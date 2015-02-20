@@ -49,7 +49,6 @@ namespace ProxyActivator
         {
             if (FormWindowState.Minimized == this.WindowState)
             {
-                
                 //ShowBalloonTipText("Proxy Activator läuft noch", "Das Programm läuft im Hintergrund weiter", ToolTipIcon.Info, 500);
                 this.Hide();
             }
@@ -100,6 +99,8 @@ namespace ProxyActivator
             this.SetText(ref L_Proxy_Github, ProxyManager.Instance.ProxyToggleGithub(enable));
             // Spotify Proxy
             this.SetText(ref L_Proxy_Spotify, ProxyManager.Instance.ProxyToggleSpotify(enable));
+            // Owncloud Proxy
+            this.SetText(ref L_Proxy_Owncloud, ProxyManager.Instance.ProxyToggleOwncloud(enable));
         }
 
         private void WLanCheck_Tick(object sender, EventArgs e)

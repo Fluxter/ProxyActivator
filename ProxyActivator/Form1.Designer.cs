@@ -50,6 +50,8 @@
             this.L_Proxy_Spotify = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.listBox1 = new System.Windows.Forms.ListBox();
+            this.L_Proxy_Owncloud = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.menuStrip2.SuspendLayout();
             this.SuspendLayout();
@@ -80,7 +82,7 @@
             // 
             this.L_Connected.AutoSize = true;
             this.L_Connected.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.L_Connected.Location = new System.Drawing.Point(126, 20);
+            this.L_Connected.Location = new System.Drawing.Point(142, 20);
             this.L_Connected.Name = "L_Connected";
             this.L_Connected.Size = new System.Drawing.Size(47, 13);
             this.L_Connected.TabIndex = 1;
@@ -90,7 +92,7 @@
             // 
             this.L_Proxy_System.AutoSize = true;
             this.L_Proxy_System.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.L_Proxy_System.Location = new System.Drawing.Point(126, 49);
+            this.L_Proxy_System.Location = new System.Drawing.Point(142, 49);
             this.L_Proxy_System.Name = "L_Proxy_System";
             this.L_Proxy_System.Size = new System.Drawing.Size(47, 13);
             this.L_Proxy_System.TabIndex = 3;
@@ -108,7 +110,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 129);
+            this.label2.Location = new System.Drawing.Point(12, 225);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(230, 13);
             this.label2.TabIndex = 4;
@@ -116,6 +118,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.L_Proxy_Owncloud);
+            this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.L_Proxy_Spotify);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.L_Proxy_Github);
@@ -126,7 +130,7 @@
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Location = new System.Drawing.Point(12, 27);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(298, 99);
+            this.groupBox1.Size = new System.Drawing.Size(298, 111);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Informationen";
@@ -192,7 +196,7 @@
             // 
             this.L_Proxy_Github.AutoSize = true;
             this.L_Proxy_Github.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.L_Proxy_Github.Location = new System.Drawing.Point(126, 62);
+            this.L_Proxy_Github.Location = new System.Drawing.Point(142, 62);
             this.L_Proxy_Github.Name = "L_Proxy_Github";
             this.L_Proxy_Github.Size = new System.Drawing.Size(47, 13);
             this.L_Proxy_Github.TabIndex = 5;
@@ -211,7 +215,7 @@
             // 
             this.L_Proxy_Spotify.AutoSize = true;
             this.L_Proxy_Spotify.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.L_Proxy_Spotify.Location = new System.Drawing.Point(126, 75);
+            this.L_Proxy_Spotify.Location = new System.Drawing.Point(142, 75);
             this.L_Proxy_Spotify.Name = "L_Proxy_Spotify";
             this.L_Proxy_Spotify.Size = new System.Drawing.Size(47, 13);
             this.L_Proxy_Spotify.TabIndex = 7;
@@ -229,10 +233,29 @@
             // listBox1
             // 
             this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(316, 31);
+            this.listBox1.Location = new System.Drawing.Point(316, 27);
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(346, 212);
             this.listBox1.TabIndex = 9;
+            // 
+            // L_Proxy_Owncloud
+            // 
+            this.L_Proxy_Owncloud.AutoSize = true;
+            this.L_Proxy_Owncloud.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.L_Proxy_Owncloud.Location = new System.Drawing.Point(142, 88);
+            this.L_Proxy_Owncloud.Name = "L_Proxy_Owncloud";
+            this.L_Proxy_Owncloud.Size = new System.Drawing.Size(47, 13);
+            this.L_Proxy_Owncloud.TabIndex = 9;
+            this.L_Proxy_Owncloud.Text = "Lade...";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(21, 88);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(117, 13);
+            this.label7.TabIndex = 8;
+            this.label7.Text = "Owncloud Proxy Status";
             // 
             // Form1
             // 
@@ -282,6 +305,8 @@
         private System.Windows.Forms.Label L_Proxy_Spotify;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.Label L_Proxy_Owncloud;
+        private System.Windows.Forms.Label label7;
     }
 }
 

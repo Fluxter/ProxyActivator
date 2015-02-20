@@ -43,18 +43,21 @@ namespace ProxyActivator
                 return new State("Nicht installiert", Color.Red);
             else
             {
+                State ret = null;
                 String path = Environment.ExpandEnvironmentVariables(@"C:\Users\%USERNAME%\.gitconfig");
                 IniFile file = new IniFile(path);
                 if (enable)
                 {
                     file.IniWriteValue("http", "proxy", "http://172.17.1.1:3128");
-                    return new State("Aktiviert", Color.Green);
+                    ret = new State("Aktiviert", Color.Green);
                 }
                 else
                 {
                     file.IniWriteValue("http", "proxy", "");
-                    return new State("Deaktiviert", Color.Green);
+                    ret = new State("Deaktiviert", Color.Green);
                 }
+                Utils.RestartApplicationIfRunning("GitHub");
+                return ret;
             }
         }
 
@@ -64,14 +67,17 @@ namespace ProxyActivator
                 return new State("Nicht installiert", Color.Red);
             else
             {
-                if (enable)
-                {
-                    return new State("Aktiviert", Color.Green);
-                }
-                else
-                {
-                    return new State("Deaktiviert", Color.Green);
-                }
+                return new State("NICHT ENTHALTEN", Color.Orange);
+            }
+        }
+
+        public State ProxyToggleOwncloud(Boolean enable)
+        {
+            if (!Utils.CheckForSoftwareInstallation("owncloud"))
+                return new State("Nicht installiert", Color.Red);
+            else
+            {
+                return new State("NICHT ENTHALTEN", Color.Orange);
             }
         }
     }
