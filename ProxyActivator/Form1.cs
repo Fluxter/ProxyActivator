@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Collections;
 using Microsoft.Win32;
 
+
 namespace ProxyActivator
 {
     public partial class Form1 : Form
@@ -22,6 +23,7 @@ namespace ProxyActivator
         private void Form1_Load(object sender, EventArgs e)
         {
             notifyIcon.Visible = true;
+            CheckVersion();
 
             this.WindowState = FormWindowState.Minimized;
             this.ShowInTaskbar = false;
@@ -73,7 +75,7 @@ namespace ProxyActivator
         }
         private void DeactivateAllProxies()
         {
-            if (ProxyManager.Instance.ProxyActivated)
+            if (!ProxyManager.Instance.ProxyActivated)
                 return;
 
             ProxyManager.Instance.ProxyActivated = false;
@@ -109,6 +111,7 @@ namespace ProxyActivator
             {
                 if (WlanManager.Instance.IsConnectedToAnySSID())
                 {
+                    //MessageBox.Show("Mit irgendeinem verbunden");
                     if (WlanManager.Instance.IsConnectedToSSID(WlanManager.WifiSSID))
                     {
                         ActivateAllProxies();
@@ -221,6 +224,55 @@ namespace ProxyActivator
             text += "sich im Schul-Netzwerk befindet. Dies soll das ständige umstellen für Heim und Schul-Netz vereinfachen.";
             text += "\n\nEntwickler: Marcel Kallen (admin@kallensrv.de)\nAuf Github: https://github.com/Levitas/ProxyActivator";
             MessageBox.Show(text, "Über Proxy Activator", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void proxyAktivierenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.ActivateAllProxies();
+            MessageBox.Show("Alle Proxy Einstellungen wurden getroffen.", "Erfolgreich", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void proxyDeaktivierenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.DeactivateAllProxies();
+            MessageBox.Show("Alle Proxy Einstellungen wurden gelöscht.", "Erfolgreich", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void VersionCheckTimer_Tick(object sender, EventArgs e)
+        {
+            CheckVersion();
+        }
+
+
+        private Boolean VersionCheckInProgress = false;
+        private void CheckVersion()
+        {
+            if (VersionCheckInProgress)
+                return;
+            Uri link = new Uri("http://dl.kallensrv.de/api.php?do=compareVersion&id=" + Global.ServerID + "&version=" + Global.Version);
+            System.Net.WebClient client = new System.Net.WebClient();
+            client.DownloadDataCompleted += delegate(object sender, System.Net.DownloadDataCompletedEventArgs e)
+                {
+                    this.VersionCheckInProgress = false;
+                    string data = System.Text.Encoding.UTF8.GetString(e.Result);
+                    if (data.Contains("True|"))
+                    {
+                        VersionCheckTimer.Enabled = false;
+                        DialogResult result = MessageBox.Show("Es ist eine neue Version verfügbar: " + data.Split('|')[1] + "\nDeine Version: " + Global.Version + "\n \nMöchten Sie diese herunterladen?", "Neue Version", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                        if (DialogResult.Yes == result)
+                        {
+                            System.Diagnostics.Process.Start("http://dl.kallensrv.de/?id=" + Global.ServerID);
+                        }
+                    }
+                };
+            client.DownloadDataAsync(link);
+            VersionCheckInProgress = true;
+
+        }
+
+        private void aufUpdatesPrüfenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CheckVersion();
         }
     }
 }

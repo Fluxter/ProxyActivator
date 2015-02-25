@@ -38,20 +38,25 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.L_Proxy_Owncloud = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.L_Proxy_Spotify = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.L_Proxy_Github = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.dateiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.programmMitWindowsStartenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.programmNichtMitWindowsStartenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuStrip2 = new System.Windows.Forms.MenuStrip();
             this.beendenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip2 = new System.Windows.Forms.MenuStrip();
+            this.manuellToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.proxyAktivierenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.proxyDeaktivierenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.überToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.überToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.L_Proxy_Github = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.L_Proxy_Spotify = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
             this.listBox1 = new System.Windows.Forms.ListBox();
-            this.L_Proxy_Owncloud = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
+            this.VersionCheckTimer = new System.Windows.Forms.Timer(this.components);
+            this.aufUpdatesPrüfenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
             this.menuStrip2.SuspendLayout();
             this.SuspendLayout();
@@ -135,6 +140,63 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Informationen";
             // 
+            // L_Proxy_Owncloud
+            // 
+            this.L_Proxy_Owncloud.AutoSize = true;
+            this.L_Proxy_Owncloud.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.L_Proxy_Owncloud.Location = new System.Drawing.Point(142, 88);
+            this.L_Proxy_Owncloud.Name = "L_Proxy_Owncloud";
+            this.L_Proxy_Owncloud.Size = new System.Drawing.Size(47, 13);
+            this.L_Proxy_Owncloud.TabIndex = 9;
+            this.L_Proxy_Owncloud.Text = "Lade...";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(21, 88);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(117, 13);
+            this.label7.TabIndex = 8;
+            this.label7.Text = "Owncloud Proxy Status";
+            // 
+            // L_Proxy_Spotify
+            // 
+            this.L_Proxy_Spotify.AutoSize = true;
+            this.L_Proxy_Spotify.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.L_Proxy_Spotify.Location = new System.Drawing.Point(142, 75);
+            this.L_Proxy_Spotify.Name = "L_Proxy_Spotify";
+            this.L_Proxy_Spotify.Size = new System.Drawing.Size(47, 13);
+            this.L_Proxy_Spotify.TabIndex = 7;
+            this.L_Proxy_Spotify.Text = "Lade...";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(21, 75);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(101, 13);
+            this.label6.TabIndex = 6;
+            this.label6.Text = "Spotify Proxy Status";
+            // 
+            // L_Proxy_Github
+            // 
+            this.L_Proxy_Github.AutoSize = true;
+            this.L_Proxy_Github.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.L_Proxy_Github.Location = new System.Drawing.Point(142, 62);
+            this.L_Proxy_Github.Name = "L_Proxy_Github";
+            this.L_Proxy_Github.Size = new System.Drawing.Size(47, 13);
+            this.L_Proxy_Github.TabIndex = 5;
+            this.L_Proxy_Github.Text = "Lade...";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(21, 62);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(100, 13);
+            this.label5.TabIndex = 4;
+            this.label5.Text = "Github Proxy Status";
+            // 
             // dateiToolStripMenuItem
             // 
             this.dateiToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -159,10 +221,18 @@
             this.programmNichtMitWindowsStartenToolStripMenuItem.Text = "Automatischen Programmstart löschen";
             this.programmNichtMitWindowsStartenToolStripMenuItem.Click += new System.EventHandler(this.programmNichtMitWindowsStartenToolStripMenuItem_Click);
             // 
+            // beendenToolStripMenuItem
+            // 
+            this.beendenToolStripMenuItem.Name = "beendenToolStripMenuItem";
+            this.beendenToolStripMenuItem.Size = new System.Drawing.Size(282, 22);
+            this.beendenToolStripMenuItem.Text = "Beenden";
+            this.beendenToolStripMenuItem.Click += new System.EventHandler(this.beendenToolStripMenuItem_Click);
+            // 
             // menuStrip2
             // 
             this.menuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.dateiToolStripMenuItem,
+            this.manuellToolStripMenuItem,
             this.überToolStripMenuItem});
             this.menuStrip2.Location = new System.Drawing.Point(0, 0);
             this.menuStrip2.Name = "menuStrip2";
@@ -170,12 +240,29 @@
             this.menuStrip2.TabIndex = 7;
             this.menuStrip2.Text = "menuStrip2";
             // 
-            // beendenToolStripMenuItem
+            // manuellToolStripMenuItem
             // 
-            this.beendenToolStripMenuItem.Name = "beendenToolStripMenuItem";
-            this.beendenToolStripMenuItem.Size = new System.Drawing.Size(282, 22);
-            this.beendenToolStripMenuItem.Text = "Beenden";
-            this.beendenToolStripMenuItem.Click += new System.EventHandler(this.beendenToolStripMenuItem_Click);
+            this.manuellToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.proxyAktivierenToolStripMenuItem,
+            this.proxyDeaktivierenToolStripMenuItem,
+            this.aufUpdatesPrüfenToolStripMenuItem});
+            this.manuellToolStripMenuItem.Name = "manuellToolStripMenuItem";
+            this.manuellToolStripMenuItem.Size = new System.Drawing.Size(62, 20);
+            this.manuellToolStripMenuItem.Text = "Manuell";
+            // 
+            // proxyAktivierenToolStripMenuItem
+            // 
+            this.proxyAktivierenToolStripMenuItem.Name = "proxyAktivierenToolStripMenuItem";
+            this.proxyAktivierenToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.proxyAktivierenToolStripMenuItem.Text = "Proxy aktivieren";
+            this.proxyAktivierenToolStripMenuItem.Click += new System.EventHandler(this.proxyAktivierenToolStripMenuItem_Click);
+            // 
+            // proxyDeaktivierenToolStripMenuItem
+            // 
+            this.proxyDeaktivierenToolStripMenuItem.Name = "proxyDeaktivierenToolStripMenuItem";
+            this.proxyDeaktivierenToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.proxyDeaktivierenToolStripMenuItem.Text = "Proxy deaktivieren";
+            this.proxyDeaktivierenToolStripMenuItem.Click += new System.EventHandler(this.proxyDeaktivierenToolStripMenuItem_Click);
             // 
             // überToolStripMenuItem
             // 
@@ -192,44 +279,6 @@
             this.überToolStripMenuItem1.Text = "Über";
             this.überToolStripMenuItem1.Click += new System.EventHandler(this.überToolStripMenuItem1_Click);
             // 
-            // L_Proxy_Github
-            // 
-            this.L_Proxy_Github.AutoSize = true;
-            this.L_Proxy_Github.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.L_Proxy_Github.Location = new System.Drawing.Point(142, 62);
-            this.L_Proxy_Github.Name = "L_Proxy_Github";
-            this.L_Proxy_Github.Size = new System.Drawing.Size(47, 13);
-            this.L_Proxy_Github.TabIndex = 5;
-            this.L_Proxy_Github.Text = "Lade...";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(21, 62);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(100, 13);
-            this.label5.TabIndex = 4;
-            this.label5.Text = "Github Proxy Status";
-            // 
-            // L_Proxy_Spotify
-            // 
-            this.L_Proxy_Spotify.AutoSize = true;
-            this.L_Proxy_Spotify.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.L_Proxy_Spotify.Location = new System.Drawing.Point(142, 75);
-            this.L_Proxy_Spotify.Name = "L_Proxy_Spotify";
-            this.L_Proxy_Spotify.Size = new System.Drawing.Size(47, 13);
-            this.L_Proxy_Spotify.TabIndex = 7;
-            this.L_Proxy_Spotify.Text = "Lade...";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(21, 75);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(101, 13);
-            this.label6.TabIndex = 6;
-            this.label6.Text = "Spotify Proxy Status";
-            // 
             // listBox1
             // 
             this.listBox1.FormattingEnabled = true;
@@ -238,24 +287,18 @@
             this.listBox1.Size = new System.Drawing.Size(346, 212);
             this.listBox1.TabIndex = 9;
             // 
-            // L_Proxy_Owncloud
+            // VersionCheckTimer
             // 
-            this.L_Proxy_Owncloud.AutoSize = true;
-            this.L_Proxy_Owncloud.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.L_Proxy_Owncloud.Location = new System.Drawing.Point(142, 88);
-            this.L_Proxy_Owncloud.Name = "L_Proxy_Owncloud";
-            this.L_Proxy_Owncloud.Size = new System.Drawing.Size(47, 13);
-            this.L_Proxy_Owncloud.TabIndex = 9;
-            this.L_Proxy_Owncloud.Text = "Lade...";
+            this.VersionCheckTimer.Enabled = true;
+            this.VersionCheckTimer.Interval = 600000;
+            this.VersionCheckTimer.Tick += new System.EventHandler(this.VersionCheckTimer_Tick);
             // 
-            // label7
+            // aufUpdatesPrüfenToolStripMenuItem
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(21, 88);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(117, 13);
-            this.label7.TabIndex = 8;
-            this.label7.Text = "Owncloud Proxy Status";
+            this.aufUpdatesPrüfenToolStripMenuItem.Name = "aufUpdatesPrüfenToolStripMenuItem";
+            this.aufUpdatesPrüfenToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.aufUpdatesPrüfenToolStripMenuItem.Text = "Auf Updates prüfen";
+            this.aufUpdatesPrüfenToolStripMenuItem.Click += new System.EventHandler(this.aufUpdatesPrüfenToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -307,6 +350,11 @@
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.Label L_Proxy_Owncloud;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ToolStripMenuItem manuellToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem proxyAktivierenToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem proxyDeaktivierenToolStripMenuItem;
+        private System.Windows.Forms.Timer VersionCheckTimer;
+        private System.Windows.Forms.ToolStripMenuItem aufUpdatesPrüfenToolStripMenuItem;
     }
 }
 
