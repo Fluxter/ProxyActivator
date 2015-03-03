@@ -22,6 +22,7 @@ namespace ProxyActivator
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            toolStripStatusLabel1.Text = "Programm wurde gestartet.";
             notifyIcon.Visible = true;
             CheckVersion();
 
@@ -253,26 +254,41 @@ namespace ProxyActivator
             System.Net.WebClient client = new System.Net.WebClient();
             client.DownloadDataCompleted += delegate(object sender, System.Net.DownloadDataCompletedEventArgs e)
                 {
-                    this.VersionCheckInProgress = false;
-                    string data = System.Text.Encoding.UTF8.GetString(e.Result);
-                    if (data.Contains("True|"))
+                    try
                     {
-                        VersionCheckTimer.Enabled = false;
-                        DialogResult result = MessageBox.Show("Es ist eine neue Version verfügbar: " + data.Split('|')[1] + "\nDeine Version: " + Global.Version + "\n \nMöchten Sie diese herunterladen?", "Neue Version", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-                        if (DialogResult.Yes == result)
+                        this.VersionCheckInProgress = false;
+                        string data = System.Text.Encoding.UTF8.GetString(e.Result);
+                        if (data.Contains("True|"))
                         {
-                            System.Diagnostics.Process.Start("http://dl.kallensrv.de/?id=" + Global.ServerID);
+                            VersionCheckTimer.Enabled = false;
+                            toolStripStatusLabel1.Text = "Es wurde ein Update gefunden.";
+                            DialogResult result = MessageBox.Show("Es ist eine neue Version verfügbar: " + data.Split('|')[1] + "\nDeine Version: " + Global.Version + "\n \nMöchten Sie diese herunterladen?", "Neue Version", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                            if (DialogResult.Yes == result)
+                            {
+                                System.Diagnostics.Process.Start("http://dl.kallensrv.de/?id=" + Global.ServerID);
+                            }
                         }
+                        else
+                        {
+                            
+                            toolStripStatusLabel1.Text = "Kein Update verfügbar";
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        toolStripStatusLabel1.Text = "Fehler bei Update Überprüfung.";
                     }
                 };
             client.DownloadDataAsync(link);
             VersionCheckInProgress = true;
+            toolStripStatusLabel1.Text = "Überprüfe auf Updates.";
 
         }
 
         private void aufUpdatesPrüfenToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CheckVersion();
+            toolStripStatusLabel1.Text = "Manuelle Update Überprüfung gestartet.";
         }
     }
 }
