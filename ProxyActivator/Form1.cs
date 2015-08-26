@@ -31,7 +31,7 @@ namespace ProxyActivator
 
             ShowBalloonTipText(
                 "Proxy Activator gestartet",
-                "Der BK-TM Proxy Activator läuft nun im Hintergrund.\nKontakt: admin@kallensrv.de",
+                "Der BK-TM Proxy Activator läuft nun im Hintergrund.",
                 ToolTipIcon.Info, 600
             );
 
@@ -250,7 +250,7 @@ namespace ProxyActivator
         {
             if (VersionCheckInProgress)
                 return;
-            Uri link = new Uri("http://dl.kallensrv.de/api.php?do=compareVersion&id=" + Global.ServerID + "&version=" + Global.Version);
+            Uri link = new Uri("http://proxyactivator.fursystems.de/bin/version.txt");
             System.Net.WebClient client = new System.Net.WebClient();
             client.DownloadDataCompleted += delegate(object sender, System.Net.DownloadDataCompletedEventArgs e)
                 {
@@ -258,14 +258,15 @@ namespace ProxyActivator
                     {
                         this.VersionCheckInProgress = false;
                         string data = System.Text.Encoding.UTF8.GetString(e.Result);
-                        if (data.Contains("True|"))
+                        MessageBox.Show(data);
+                        if (new Version(data).CompareTo(Global.Version) > 0)
                         {
                             VersionCheckTimer.Enabled = false;
                             toolStripStatusLabel1.Text = "Es wurde ein Update gefunden.";
-                            DialogResult result = MessageBox.Show("Es ist eine neue Version verfügbar: " + data.Split('|')[1] + "\nDeine Version: " + Global.Version + "\n \nMöchten Sie diese herunterladen?", "Neue Version", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                            DialogResult result = MessageBox.Show("Es ist eine neue Version verfügbar: " + data + "\nDeine Version: " + Global.Version + "\n \nMöchten Sie diese herunterladen?", "Neue Version", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                             if (DialogResult.Yes == result)
                             {
-                                System.Diagnostics.Process.Start("http://dl.kallensrv.de/?id=" + Global.ServerID);
+                                System.Diagnostics.Process.Start("http://proxyactivator.fursystems.de/bin/ProxyActivator.exe");
                             }
                         }
                         else

@@ -52,11 +52,11 @@
             this.manuellToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.proxyAktivierenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.proxyDeaktivierenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aufUpdatesPrüfenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.überToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.überToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.VersionCheckTimer = new System.Windows.Forms.Timer(this.components);
-            this.aufUpdatesPrüfenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.groupBox1.SuspendLayout();
@@ -120,9 +120,9 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(12, 225);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(230, 13);
+            this.label2.Size = new System.Drawing.Size(207, 13);
             this.label2.TabIndex = 4;
-            this.label2.Text = "Created by Marcel Kallen (admin@kallensrv.de)";
+            this.label2.Text = "Created by Marcel Kallen ( Fursystems.de )";
             // 
             // groupBox1
             // 
@@ -267,6 +267,13 @@
             this.proxyDeaktivierenToolStripMenuItem.Text = "Proxy deaktivieren";
             this.proxyDeaktivierenToolStripMenuItem.Click += new System.EventHandler(this.proxyDeaktivierenToolStripMenuItem_Click);
             // 
+            // aufUpdatesPrüfenToolStripMenuItem
+            // 
+            this.aufUpdatesPrüfenToolStripMenuItem.Name = "aufUpdatesPrüfenToolStripMenuItem";
+            this.aufUpdatesPrüfenToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.aufUpdatesPrüfenToolStripMenuItem.Text = "Auf Updates prüfen";
+            this.aufUpdatesPrüfenToolStripMenuItem.Click += new System.EventHandler(this.aufUpdatesPrüfenToolStripMenuItem_Click);
+            // 
             // überToolStripMenuItem
             // 
             this.überToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -278,7 +285,7 @@
             // überToolStripMenuItem1
             // 
             this.überToolStripMenuItem1.Name = "überToolStripMenuItem1";
-            this.überToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.überToolStripMenuItem1.Size = new System.Drawing.Size(99, 22);
             this.überToolStripMenuItem1.Text = "Über";
             this.überToolStripMenuItem1.Click += new System.EventHandler(this.überToolStripMenuItem1_Click);
             // 
@@ -295,13 +302,6 @@
             this.VersionCheckTimer.Enabled = true;
             this.VersionCheckTimer.Interval = 600000;
             this.VersionCheckTimer.Tick += new System.EventHandler(this.VersionCheckTimer_Tick);
-            // 
-            // aufUpdatesPrüfenToolStripMenuItem
-            // 
-            this.aufUpdatesPrüfenToolStripMenuItem.Name = "aufUpdatesPrüfenToolStripMenuItem";
-            this.aufUpdatesPrüfenToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
-            this.aufUpdatesPrüfenToolStripMenuItem.Text = "Auf Updates prüfen";
-            this.aufUpdatesPrüfenToolStripMenuItem.Click += new System.EventHandler(this.aufUpdatesPrüfenToolStripMenuItem_Click);
             // 
             // statusStrip1
             // 

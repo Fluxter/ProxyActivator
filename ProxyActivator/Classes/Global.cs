@@ -7,8 +7,11 @@ namespace ProxyActivator
 {
     class Global
     {
-        public const String Version = "1.2.1";
         public const Int32 ServerID = 5;
 
+        public static Version Version 
+        {
+            get { return new Version("1.2.1"); }
+        }
     }
 }
