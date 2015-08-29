@@ -30,15 +30,37 @@ namespace ProxyActivator
             this.ShowInTaskbar = false;
 
             ShowBalloonTipText(
-                "Proxy Activator gestartet",
-                "Der BK-TM Proxy Activator läuft nun im Hintergrund.",
+                "ProxyActivator started.",
+                "The Proxy Activator is now running in the background.",
                 ToolTipIcon.Info, 600
             );
 
             ContextMenu menue = new ContextMenu();
-            menue.MenuItems.Add(new MenuItem("Über..", überToolStripMenuItem1_Click));
+            menue.MenuItems.Add(new MenuItem("About..", überToolStripMenuItem1_Click));
             menue.MenuItems.Add(new MenuItem("Exit", beendenToolStripMenuItem_Click));
             notifyIcon.ContextMenu = menue;
+
+            String res = WLanAPManager.Instance.LoadAPsFromFile();
+            if (res.Length != 0)
+                MessageBox.Show("Couldnt load save file. \n \nError message: " + res, "Error reading save file", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+
+
+            List<WLanAP> wlanaps = WLanAPManager.Instance.GetWLanAPs();
+            if (wlanaps.Count != 0)
+            {
+                dataGridView1.Show();
+                dataGridView1.ColumnCount = 3;
+                dataGridView1.Columns[0].Name = "AP Name";
+                dataGridView1.Columns[1].Name = "Proxy IP";
+                dataGridView1.Columns[2].Name = "Proxy Port";
+                foreach (WLanAP ap in WLanAPManager.Instance.GetWLanAPs())
+                {
+                    dataGridView1.Rows.Add(ap.APName, ap.proxyIP, ap.proxyPort);
+                }
+            }
+            else dataGridView1.Hide();
+            
         }
 
         private void ShowBalloonTipText(string title, string text, ToolTipIcon icon, int time)
@@ -61,32 +83,6 @@ namespace ProxyActivator
         {
         }
 
-        private void ActivateAllProxies()
-        {
-            if (ProxyManager.Instance.ProxyActivated)
-                return;
-
-            ProxyManager.Instance.ProxyActivated = true;
-            L_Connected.ForeColor = Color.Green;
-            L_Connected.Text = "Verbunden";
-
-            ShowBalloonTipText("Wlan \"" + WlanManager.WifiSSID + "\" Wlan verbunden!", "Alle Proxys wurden eingerichtet.", ToolTipIcon.Info, 2000);
-
-            this.ToggleProxies(true);
-        }
-        private void DeactivateAllProxies()
-        {
-            if (!ProxyManager.Instance.ProxyActivated)
-                return;
-
-            ProxyManager.Instance.ProxyActivated = false;
-            L_Connected.ForeColor = Color.Orange;
-            L_Connected.Text = "Nicht verbunden";
-
-            this.ToggleProxies(false);
-
-            ShowBalloonTipText("Wlan \"" + WlanManager.WifiSSID + "\" Wlan getrennt!", "Alle Proxies wurden ausgeschaltet", ToolTipIcon.Warning, 2000);
-        }
 
         private void SetText(ref Label label, State state)
         {
@@ -94,54 +90,91 @@ namespace ProxyActivator
             label.Text = state.Text;
         }
 
-        private void ToggleProxies(Boolean enable)
+        private void ChangeConnectedStatus(Color col, string text)
         {
-            // Systemproxy
-            this.SetText(ref L_Proxy_System, ProxyManager.Instance.ProxyToggleSystem(enable));
-            // Github Proxy
-            this.SetText(ref L_Proxy_Github, ProxyManager.Instance.ProxyToggleGithub(enable));
-            // Spotify Proxy
-            this.SetText(ref L_Proxy_Spotify, ProxyManager.Instance.ProxyToggleSpotify(enable));
-            // Owncloud Proxy
-            this.SetText(ref L_Proxy_Owncloud, ProxyManager.Instance.ProxyToggleOwncloud(enable));
+            L_Connected.ForeColor = col;
+            L_Connected.Text = text;
         }
 
         private void WLanCheck_Tick(object sender, EventArgs e)
         {
-            if (!ProxyManager.Instance.ProxyActivated)
+            // Proxy muss eingeschaltet werden
+            if (WlanManager.Instance.IsConnectedToAnySSID())
             {
-                if (WlanManager.Instance.IsConnectedToAnySSID())
+                //
+                Boolean alreadyConfigured = false;
+                Boolean anyDefinedAPConfigured = false;
+
+                WLanAP connectedNotConfiguredAP = null;
+                
+                foreach (WLanAP ap in WLanAPManager.Instance.GetWLanAPs())
                 {
-                    //MessageBox.Show("Mit irgendeinem verbunden");
-                    if (WlanManager.Instance.IsConnectedToSSID(WlanManager.WifiSSID))
+                    if (WlanManager.Instance.IsConnectedToSSID(ap.APName))
                     {
-                        ActivateAllProxies();
-                    }
-                    else
-                    {
-                        L_Connected.ForeColor = Color.Orange;
-                        L_Connected.Text = "Nicht mit Schulnetz verbunden";
+                        if (ProxyManager.Instance.ConfiguredProxyName.Equals(ap.APName))
+                        {
+                            alreadyConfigured = true;
+                        }
+                        anyDefinedAPConfigured = true;
+                        connectedNotConfiguredAP = ap;
+                        break;
                     }
                 }
-                else 
+
+                if (connectedNotConfiguredAP != null)
                 {
-                    L_Connected.ForeColor = Color.Red;
-                    L_Connected.Text = "Nicht verbunden";
+                    if (!alreadyConfigured)
+                    {
+                        ChangeConnectedStatus(Color.Green, "Connected to " + connectedNotConfiguredAP.APName + ". Proxy enabled. (" + connectedNotConfiguredAP.proxyIP + ":" + connectedNotConfiguredAP.proxyPort + ")");
+                        ProxyToggleAll(true, connectedNotConfiguredAP.proxyIP, connectedNotConfiguredAP.proxyPort, connectedNotConfiguredAP.APName);
+                        ProxyManager.Instance.ConfiguredProxyName = connectedNotConfiguredAP.APName;
+
+                        L_Proxy_Github.ForeColor = ProxyManager.Instance.ProxyStateGithub.Color;
+                        L_Proxy_Github.Text = ProxyManager.Instance.ProxyStateGithub.Text;
+
+                        L_Proxy_System.ForeColor = ProxyManager.Instance.ProxyStateSystem.Color;
+                        L_Proxy_System.Text = ProxyManager.Instance.ProxyStateSystem.Text;
+
+                        L_Proxy_Owncloud.ForeColor = ProxyManager.Instance.ProxyStateOwncloud.Color;
+                        L_Proxy_Owncloud.Text = ProxyManager.Instance.ProxyStateOwncloud.Text;
+
+                        L_Proxy_Spotify.ForeColor = ProxyManager.Instance.ProxyStateSpotify.Color;
+                        L_Proxy_Spotify.Text = ProxyManager.Instance.ProxyStateSpotify.Text;
+                    }
+                }
+                else if (!anyDefinedAPConfigured)
+                {
+                    ChangeConnectedStatus(Color.Red, "Not connected to any defined wireless network.");
+                    ProxyToggleAll(false);
+                }
+
+                //
+            }
+            // Proxy muss ausgeschaltet werden
+            else
+            {
+                ChangeConnectedStatus(Color.Orange, "Not connected to any wireless network");
+
+                ProxyToggleAll(false);
+            }
+                
+        }
+
+        private void ProxyToggleAll(bool active, string ip = "", int port= 0 , string proxyName = "")
+        {
+            if (!active)
+            {
+                // Soll ausschalten
+                if (ProxyManager.Instance.ConfiguredProxyName.Length != 0)
+                {
+                    ShowBalloonTipText("Deactivated", "Proxy was deactivated.", ToolTipIcon.Info, 2000);
+                    ProxyManager.Instance.ProxyToggleAll(active, ip, port, proxyName);
                 }
             }
             else
             {
-                if (!WlanManager.Instance.IsConnectedToAnySSID())
-                {
-                    DeactivateAllProxies();
-                }
-                else 
-                {
-                    if (!WlanManager.Instance.IsConnectedToSSID(WlanManager.WifiSSID))
-                    {
-                        DeactivateAllProxies();
-                    }
-                }
+                ShowBalloonTipText("Activated", "Proxy was activated. \nAP Name: " + proxyName + "\nProxy: " + ip + ":" + port + ".", ToolTipIcon.Info, 2000);
+                ProxyManager.Instance.ProxyToggleAll(active, ip, port, proxyName);
             }
         }
 
@@ -180,7 +213,7 @@ namespace ProxyActivator
             try
             {
                 RegistryKey AutostartKey = Microsoft.Win32.Registry.LocalMachine.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-                AutostartKey.SetValue("MK-BKTM-Autostart", Application.ExecutablePath.ToString());
+                AutostartKey.SetValue("FS-ProxyActivator-Start", Application.ExecutablePath.ToString());
                 AutostartKey.Close();
                 MessageBox.Show("Das Programm wird nun automatisch mit Windows gestartet.", "Erfolgreich", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
@@ -195,7 +228,7 @@ namespace ProxyActivator
             try
             {
                 RegistryKey AutostartKey = Microsoft.Win32.Registry.LocalMachine.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-                AutostartKey.DeleteValue("MK-BKTM-Autostart");
+                AutostartKey.DeleteValue("FS-ProxyActivator-Start");
                 AutostartKey.Close();
                 MessageBox.Show("Das Programm wird nun nicht mehr mit Windows gestartet.", "Erfolgreich", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
@@ -209,7 +242,7 @@ namespace ProxyActivator
         {
             if (MessageBox.Show("Sind Sie sicher, dass Sie den Proxy Activator schließen möchten?", "Schließen", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk) == DialogResult.Yes)
             {
-                WlanManager.Instance.DeactivateProxy();
+                ProxyToggleAll(false);
                 Application.Exit();
             }
             else
@@ -223,19 +256,18 @@ namespace ProxyActivator
             string text = "Dieses Programm wurde für das Berufskolleg für Technik und Medien geschrieben.";
             text += "\nEs dient dazu, dass der Systemproxy von Windows Betriebssystemen\nautomatisch den Schul-proxy einschaltet, sobald man";
             text += "sich im Schul-Netzwerk befindet. Dies soll das ständige umstellen für Heim und Schul-Netz vereinfachen.";
-            text += "\n\nEntwickler: Marcel Kallen (admin@kallensrv.de)\nAuf Github: https://github.com/Levitas/ProxyActivator";
+            text += "\n\nEntwickler: Marcel Kallen (marcel.kallen@fursystems.de)\nAuf Github: https://github.com/Levitas/ProxyActivator";
             MessageBox.Show(text, "Über Proxy Activator", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void proxyAktivierenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.ActivateAllProxies();
-            MessageBox.Show("Alle Proxy Einstellungen wurden getroffen.", "Erfolgreich", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            
         }
 
         private void proxyDeaktivierenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.DeactivateAllProxies();
+            ProxyManager.Instance.ProxyToggleAll(false);
             MessageBox.Show("Alle Proxy Einstellungen wurden gelöscht.", "Erfolgreich", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
@@ -258,7 +290,6 @@ namespace ProxyActivator
                     {
                         this.VersionCheckInProgress = false;
                         string data = System.Text.Encoding.UTF8.GetString(e.Result);
-                        MessageBox.Show(data);
                         if (new Version(data).CompareTo(Global.Version) > 0)
                         {
                             VersionCheckTimer.Enabled = false;
@@ -290,6 +321,11 @@ namespace ProxyActivator
         {
             CheckVersion();
             toolStripStatusLabel1.Text = "Manuelle Update Überprüfung gestartet.";
+        }
+
+        private void manuellToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

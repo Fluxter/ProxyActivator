@@ -21,84 +21,92 @@ namespace ProxyActivator
             }
         }
 
-        public Boolean ProxyActivated = false;
 
-        public State ProxyToggleSystem(Boolean enable)
+        public string ConfiguredProxyName = "";
+
+        public void ProxyToggleAll(bool active, string ip = "", int port = 0, string ProxyName = "")
+        {
+            this.ProxyToggleSystem(active, ip, port);
+            this.ProxyToggleGithub(active, ip, port);
+            this.ProxyToggleOwncloud(active, ip, port);
+        }
+
+        public State ProxyStateSystem = new State("No information.", Color.Black);
+        public void ProxyToggleSystem(Boolean enable, string ip, int port)
         {
             if (enable)
             {
-                WlanManager.Instance.ActivateProxy("172.17.1.1", 3128);
-                return new State("Aktiviert", Color.Green);
+                WlanManager.Instance.ActivateProxy(ip, port);
+                ProxyStateSystem = new State("Aktiviert", Color.Green);
             }
             else
             {
                 WlanManager.Instance.DeactivateProxy();
-                return new State("Deaktiviert", Color.Orange);
+                ProxyStateSystem = new State("Deaktiviert", Color.Orange);
             }
         }
 
-        public State ProxyToggleGithub(Boolean enable)
+        public State ProxyStateGithub = new State("No information.", Color.Black);
+        public void ProxyToggleGithub(Boolean enable, String ip, Int32 port)
         {
             if (!Utils.AppDataRoamingFolderExists("GitHub"))
-                return new State("Nicht installiert", Color.Red);
+                ProxyStateGithub = new State("Nicht installiert", Color.Red);
             else
             {
-                State ret = null;
                 String path = Environment.ExpandEnvironmentVariables(@"C:\Users\%USERNAME%\.gitconfig");
                 IniFile file = new IniFile(path);
                 if (enable)
                 {
-                    file.IniWriteValue("http", "proxy", "http://172.17.1.1:3128");
-                    ret = new State("Aktiviert", Color.Green);
+                    file.IniWriteValue("http", "proxy", "http://" + ip + ":" + port);
+                    ProxyStateGithub = new State("Aktiviert", Color.Green);
                 }
                 else
                 {
                     file.IniWriteValue("http", "proxy", "");
-                    ret = new State("Deaktiviert", Color.Red);
+                    ProxyStateGithub = new State("Deaktiviert", Color.Red);
                 }
                 Utils.RestartApplicationIfRunning("GitHub");
-                return ret;
             }
         }
 
-        public State ProxyToggleSpotify(Boolean enable)
+        public State ProxyStateSpotify = new State("No information.", Color.Black);
+        public void ProxyToggleSpotify(Boolean enable, String ip, Int32 port)
         {
             if (!Utils.AppDataRoamingFolderExists("Spotify"))
-                return new State("Nicht installiert", Color.Red);
+                ProxyStateSpotify = new State("Not installed.", Color.Red);
             else
             {
-                return new State("NICHT ENTHALTEN", Color.Orange);
+                ProxyStateSpotify = new State("Not ready yet.", Color.Orange);
             }
         }
 
-        public State ProxyToggleOwncloud(Boolean enable)
+        public State ProxyStateOwncloud = new State("No information.", Color.Black);
+        public void ProxyToggleOwncloud(Boolean enable, String ip, Int32 port)
         {
             if (!Utils.AppDataLocalFolderExists("owncloud"))
-                return new State("Nicht installiert", Color.Red);
+                ProxyStateOwncloud = new State("Nicht installiert", Color.Red);
             else
             {
                 string ProcessExe = Utils.KillProcessAndGetExePathWait("owncloud");
-                State ret = null;
                 String path = Environment.ExpandEnvironmentVariables(Environment.SpecialFolder.LocalApplicationData + @"\owncloud\config.cfg");
                 IniFile file = new IniFile(path);
 
                 if (enable)
                 {
                     file.IniWriteValue("Proxy", "type", "3");
-                    file.IniWriteValue("Proxy", "host", "172.17.1.1");
-                    file.IniWriteValue("Proxy", "port", "3128");
+                    file.IniWriteValue("Proxy", "host", ip);
+                    file.IniWriteValue("Proxy", "port", port.ToString());
                     file.IniWriteValue("Proxy", "needsAuth", "false");
                     file.IniWriteValue("Proxy", "user", "");
                     file.IniWriteValue("Proxy", "pass", "@ByteArray()");
-                    ret = new State("Aktiviert", Color.Green);
+                    ProxyStateOwncloud = new State("Aktiviert", Color.Green);
                 }
                 else
                 {
                     file.IniWriteValue("Proxy", "type", "0");
-                    ret = new State("Deaktiviert", Color.Red);
+                    ProxyStateOwncloud = new State("Deaktiviert", Color.Red);
                 }
                 Utils.StartExecutable(ProcessExe);
-                return ret;
             }
         }
     }

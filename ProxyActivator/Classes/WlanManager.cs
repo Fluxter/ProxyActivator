@@ -20,10 +20,6 @@ namespace ProxyActivator
             }
         }
 
-        #region Public Variables
-        public static String WifiSSID = "AP-BKTM";
-        #endregion 
-
         #region Private Variables
         private WlanClient wlan = new WlanClient();
         #endregion
